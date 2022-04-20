@@ -133,8 +133,10 @@ def train(hyp, opt, device, tb_writer=None, wandb=None):
         opt.hyp = hyp  # add hyperparameters
         wandb_run = wandb.init(config=opt, resume="allow",
                                project='YOLOv5' if opt.project == 'runs/train' else Path(opt.project).stem,
+                               entity='cyr1ll',
                                name=save_dir.stem,
                                id=ckpt.get('wandb_id') if 'ckpt' in locals() else None)
+
     loggers = {'wandb': wandb}  # loggers dict
 
     # Resume
@@ -441,11 +443,11 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--weights', type=str, default='', help='initial weights path')
     parser.add_argument('--cfg', type=str, default='configs/model_yolo.yaml', help='model.yaml path')
-    parser.add_argument('--data', type=str, default='configs/data.yaml', help='data.yaml path')
+    parser.add_argument('--data', type=str, default='/home/sara.pieri/Documents/datasets/SeaDroneSee/SeaDroneSee.yaml', help='data.yaml path')
     parser.add_argument('--hyp', type=str, default='configs/hyp.scratch.yaml', help='hyperparameters path')
-    parser.add_argument('--epochs', type=int, default=300)
-    parser.add_argument('--batch-size', type=int, default=16, help='total batch size for all GPUs')
-    parser.add_argument('--img-size', nargs='+', type=int, default=[640, 640], help='[train, test] image sizes')
+    parser.add_argument('--epochs', type=int, default=80)
+    parser.add_argument('--batch-size', type=int, default=8, help='total batch size for all GPUs')
+    parser.add_argument('--img-size', nargs='+', type=int, default=[768, 768], help='[train, test] image sizes')#640
     parser.add_argument('--rect', action='store_true', help='rectangular training')
     parser.add_argument('--resume', nargs='?', const=True, default=False, help='resume most recent training')
     parser.add_argument('--nosave', action='store_true', help='only save final checkpoint')
